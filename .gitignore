@@ -122,5 +122,6 @@ src/pafprocess/pafprocess_wrap.cxx
 
 #trained classifier model and images
 traind_classifier_net.pth
-images/Pose_DS
-
+images/Pose_DS/*
+*.pth
+training_angles.json
