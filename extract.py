@@ -20,6 +20,7 @@ labels = os.listdir(root_path)
 
 print("\n\nFound {} Labels:".format(len(labels)))
 print(labels)
+json.dump(labels,open("training_labels.json","w"))
 
 images = {}
 

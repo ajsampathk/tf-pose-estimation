@@ -1,0 +1,4 @@
+<launch>
+  <node name='Inference_Bridge' pkg='bridge' type='inf_bridge.py' output='screen'/>
+  <node name='Inference_Data' pkg='bridge' type='inf_angles.py' output='screen'/>
+</launch>

@@ -3,12 +3,14 @@ from torch.autograd import Variable
 import json
 import sys
 from ModelClass import LinearModel
+from torchviz import make_dot
 
 device = torch.device("cuda")
 
 class PrepareDataset():
   
-  labels = ['hello','hands','namesthe','sitting','stand']
+  labels = json.load(open("training_labels.json"))
+  #labels = ['hello','hands','namesthe','sitting','stand']
   joints = ['N_RS','N_LS','RS_RE','LS_LE','RE_RW','LE_LW','N_RH','N_LH','RH_RK','LH_LK','RK_RA','LK_LA']
   dataset = []
 
@@ -30,11 +32,11 @@ if __name__ =='__main__':
   model = LinearModel(len(Dataset.labels))
 
   criterion = torch.nn.MSELoss(reduction='mean')
-  optimizer = torch.optim.Adam(model.parameters(),lr=0.07)
+  optimizer = torch.optim.SGD(model.parameters(),lr=0.07)
 
 #print(model(x[0]))
 
-  for epoch in range(1000):
+  for epoch in range(100000):
     pred_y = model(x)
     loss = criterion(pred_y,y)
     optimizer.zero_grad()
@@ -47,5 +49,5 @@ if __name__ =='__main__':
   pred = model(new)
   pred_label = Dataset.labels[pred.data.tolist().index(max(pred.data.tolist()))]
   print("Prediction:",pred_label,pred.data)
-
+  make_dot(pred.mean(),params = dict(model.named_parameters()))
   torch.save(model.state_dict(),"trained_classifier_net.pth")

@@ -9,7 +9,7 @@ class LinearModel(torch.nn.Module):
     self.hidden_2 = torch.nn.Linear(6,6)
     self.output = torch.nn.Linear(6,out)
     
-    self.activation = torch.nn.Tanh()
+    self.activation = torch.nn.Sigmoid()
 
 
   def forward(self,x):
@@ -18,7 +18,8 @@ class LinearModel(torch.nn.Module):
     x = self.activation(x)
     x = self.hidden_2(x)
     x = self.activation(x)
-    y_pred = self.output(x)
+    x = self.output(x)
+    y_pred = self.activation(x)
    
     return y_pred
 
